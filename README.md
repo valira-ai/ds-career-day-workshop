@@ -17,3 +17,80 @@ There are plenty of resources online guiding us how to set up our [PostgresSQL](
 
 ### 2. Data scientist
 As data scientists we perform exploratory data analysis (EDA), feature engineering, feature selection, model selection, metric selection, model validation and prepare the report. The code including most of these steps can be found in the [`./notebooks/02_data_science.ipynb`](https://github.com/valira-ai/ds-career-day-workshop/blob/main/notebooks/02_data_science.ipynb) notebook. In order to run it we require access to the database from the previous step.
+
+### 3. ML Engineer
+In this project, the role of a ML Engineer is to productionalize and package the model code, set up experiment tracking, model registry and deploy the model to production. Throughout our tasks we build on previous work of both data engineers and data scientists. Our code is in [`src/`](https://github.com/valira-ai/ds-career-day-workshop/tree/main/src) directory, the model package is in [`src/airbnb_model`](https://github.com/valira-ai/ds-career-day-workshop/tree/main/src/airbnb_model).
+
+You can follow these steps to reproduce the work.
+
+**Setup**
+
+Create python virtual environment and install dependencies:
+```bash
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt -r requirements-dev.txt
+```
+Install our project in editable mode:
+```bash
+pip install -e .
+```
+
+Create .env file based on default.env, change variables to reflect you PostgresSQL set up.
+
+**Training**
+
+Train a model (based on `config/train.yaml`):
+```bash
+python src/train.py
+```
+
+Perform grid search (based on `config/grid_search.yaml`):
+```bash
+python src/multi_train.py
+```
+
+All of our runs are logged by **mlflow** (in `mlruns/` folder). You can run a mlflow dashboard with:
+```bash
+mlflow ui
+```
+Go to *http://127.0.0.1:5000/* (by default) to see the dashboard.
+
+**Deployment**
+
+You can deploy our model locally by launching the server with:
+```bash
+cd src
+uvicorn app:app --port 8000
+```
+Optionally, you can use Docker to containerize the deployment with:
+```bash
+docker build -t model-api .
+docker run -d --name model-serving -p 8000:8000 model-api
+```
+
+We can check the docs of our deployed API by going to *http://localhost:8000/docs*.
+
+To test if the model API works, we can use curl with some default values:
+```bash
+curl -H "Content-Type: application/json" -d '{
+  "city": "Paris",
+  "neighbourhood_name": "Buttes-Montmartre",
+  "property_type_name": "Condominium",
+  "room_type_name": "Entire home/apt",
+  "accommodates": 2,
+  "bathrooms": 1,
+  "bedrooms": 1,
+  "beds": 1,
+  "bed_type_name": "Real Bed",
+  "minimum_nights": 1,
+  "longitude": 2.336867,
+  "latitude": 48.894187  
+}' -XPOST localhost:8000/predict
+```
+which should return a JSON with the predicted price.
+
+We can use Streamlit to provide a frontend that showcases our model. We can run the Streamlit app with:
+```bash
+streamlit run src/streamlit_model.py
+```
