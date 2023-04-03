@@ -1,0 +1,19 @@
+model: xgboost
+
+ridge:
+  type: ridge
+  feature_slots: [neighbourhood_name, property_type_name, room_type_name, bed_type_name, accommodates, bathrooms,
+  bedrooms, beds, minimum_nights, longitude_to_center, latitude_to_center, distance_to_center]
+
+xgboost:
+  type: xgboost
+  n_estimators: 300
+  feature_slots: [neighbourhood_name, property_type_name, room_type_name, bed_type_name, accommodates, bathrooms,
+  bedrooms, beds, minimum_nights, longitude_to_center, latitude_to_center, distance_to_center]
+
+params:
+  data_path: data/raw.parquet
+  seed: 42
+  num_bootstrap: 1000
+  test_size: 0.3
+  output_path: models/model.joblib

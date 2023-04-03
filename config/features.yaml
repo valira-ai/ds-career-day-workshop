@@ -1,0 +1,17 @@
+neighbourhood_name: categorical
+property_type_name: categorical
+room_type_name: categorical
+bed_type_name: categorical
+accommodates: numerical
+bathrooms: numerical
+bedrooms: numerical
+beds: numerical
+minimum_nights: numerical
+longitude: numerical
+latitude: numerical
+longitude_to_center: numerical
+latitude_to_center: numerical
+distance_to_center: numerical
+center_longitude: numerical
+center_latitude: numerical
+price: target
