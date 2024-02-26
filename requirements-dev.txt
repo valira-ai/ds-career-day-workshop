@@ -1,2 +1,2 @@
-black==23.1.0
-streamlit==1.20.0
+black==24.2.0
+streamlit==1.31.1
