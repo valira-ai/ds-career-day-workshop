@@ -4,7 +4,7 @@
 
 CREATE OR REPLACE VIEW public.vw_airbnb
  AS
- SELECT ci.city,
+ SELECT ci.city_name,
  	ci.center_longitude,
 	ci.center_latitude,
     rt.room_type_name,
