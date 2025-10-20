@@ -1,5 +1,5 @@
 # Data Science Project: From Idea to Execution :hammer_and_wrench:	
-Materials for the Data Science Career Day Workshop that was held on Wednesday, March 23 2023, at the Faculty of Computer and Information Science, University of Ljubljana. The purpose of the workshop was to demonstrate the whole workflow in data science-related applications.
+Materials for the Data Science Career Day Workshop that is being held on Tuesday, October 21 2025, at the Faculty of Computer and Information Science, University of Ljubljana. The purpose of the workshop was to demonstrate the whole workflow in data science-related applications.
 
 ## Airbnb Paris: how much can I charge? :money_with_wings:
 Imagine you have a spare apartment in Paris and you want to list in on Airbnb. However, you do not know a lot about Paris real estate prices, so that is a problem! If you charge too much, you will get less bookings, if you charge too little, you will have less profit! Luckily, you can call your friends *data engineer*, *data scientist* and *ML engineer* to help you out.  
