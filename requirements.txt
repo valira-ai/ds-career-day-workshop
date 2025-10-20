@@ -1,6 +1,8 @@
 fastapi==0.119.0
+folium==0.20.0
 geopy==2.4.1
 gunicorn==23.0.0
+plotnine==0.15.0
 ipykernel==7.0.1
 joblib==1.5.2
 mlflow==3.5.0
