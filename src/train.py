@@ -1,4 +1,5 @@
 import argparse
+import warnings
 
 from typing import Any
 
@@ -42,14 +43,14 @@ def train(train_config: dict[str, Any], model_config: dict[str, Any], features_c
     # EVALUATION
     maes = np.abs(y_test - y_pred)
     res = bootstrap((maes,), np.mean, n_resamples=train_config["num_bootstrap"])
-    print(f"MAE: {np.mean(maes):.2f}, ({res.confidence_interval.low:.2f}, {res.confidence_interval.high:.2f})")
+    print(f"MAE: {np.mean(maes):.4f}, ({res.confidence_interval.low:.4f}, {res.confidence_interval.high:.4f})")
     mlflow.log_metric("mae", np.mean(maes))
     mlflow.log_metric("mae-low", res.confidence_interval.low)
     mlflow.log_metric("mae-high", res.confidence_interval.high)
 
     mses = maes**2
     res = bootstrap((mses,), np.mean, n_resamples=train_config["num_bootstrap"])
-    print(f"MSE: {np.mean(mses):.2f}, ({res.confidence_interval.low:.2f}, {res.confidence_interval.high:.2f})")
+    print(f"MSE: {np.mean(mses):.4f}, ({res.confidence_interval.low:.4f}, {res.confidence_interval.high:.4f})")
     mlflow.log_metric("mse", np.mean(mses))
     mlflow.log_metric("mse-low", res.confidence_interval.low)
     mlflow.log_metric("mse-high", res.confidence_interval.high)
@@ -69,6 +70,9 @@ def _setup_parser() -> argparse.ArgumentParser:
 
 
 if __name__ == "__main__":
+    # Filter sklearn pipeline warnings
+    warnings.filterwarnings("ignore", message="This Pipeline instance is not fitted yet", category=FutureWarning)
+    
     # setup
     load_dotenv(".env")
     args = _setup_parser().parse_args()

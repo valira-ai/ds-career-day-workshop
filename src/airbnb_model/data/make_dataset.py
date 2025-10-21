@@ -4,7 +4,7 @@ from typing import Any
 
 import numpy as np
 import pandas as pd
-import psycopg2
+import psycopg
 
 
 def make_dataset(out_path: str, features_config: dict[str, Any]) -> None:
@@ -12,7 +12,7 @@ def make_dataset(out_path: str, features_config: dict[str, Any]) -> None:
     if os.path.exists(out_path):
         return
 
-    conn = psycopg2.connect(
+    conn = psycopg.connect(
         database=os.environ["DB_NAME"],
         user=os.environ["DB_USER"],
         password=os.environ["DB_PASSWORD"],
@@ -24,7 +24,7 @@ def make_dataset(out_path: str, features_config: dict[str, Any]) -> None:
     conn.close()
 
     data["price"] = data["price"].apply(lambda x: float(x.replace("$", "").replace(",", "")))
-    data = data.replace(-1, np.NaN)
+    data = data.replace(-1, np.nan)
     data = data.dropna()  # oops -> you should handle missing data, this is for presentation purposes only
 
     features_to_keep = [feat for feat in features_config.keys() if feat in set(data.columns)]

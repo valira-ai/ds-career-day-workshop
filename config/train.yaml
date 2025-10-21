@@ -2,14 +2,26 @@ model: xgboost
 
 ridge:
   type: ridge
-  feature_slots: [neighbourhood_name, property_type_name, room_type_name, bed_type_name, accommodates, bathrooms,
-  bedrooms, beds, minimum_nights, longitude_to_center, latitude_to_center, distance_to_center]
+  feature_slots: [neighbourhood_name, property_type_name, room_type_name, bed_type_name, accommodates, bathrooms, bedrooms, beds, minimum_nights, longitude_to_center, latitude_to_center, distance_to_center]
 
 xgboost:
   type: xgboost
   n_estimators: 300
-  feature_slots: [neighbourhood_name, property_type_name, room_type_name, bed_type_name, accommodates, bathrooms,
-  bedrooms, beds, minimum_nights, longitude_to_center, latitude_to_center, distance_to_center]
+  feature_slots: [neighbourhood_name, property_type_name, room_type_name, bed_type_name, accommodates, bathrooms, bedrooms, beds, minimum_nights, longitude_to_center, latitude_to_center, distance_to_center]
+
+mlp:
+  type: mlp
+  hidden_layer_sizes: [100, 50]
+  activation: relu
+  solver: adam
+  alpha: 0.001
+  learning_rate_init: 0.001
+  max_iter: 1000
+  early_stopping: true
+  validation_fraction: 0.1
+  n_iter_no_change: 30
+  random_state: 42
+  feature_slots: [neighbourhood_name, property_type_name, room_type_name, bed_type_name, accommodates, bathrooms, bedrooms, beds, minimum_nights, longitude_to_center, latitude_to_center, distance_to_center]
 
 params:
   data_path: data/raw.parquet
